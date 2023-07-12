@@ -1,5 +1,6 @@
 package Alkemy.BilleteraVirtual.entities;
 
+import Alkemy.BilleteraVirtual.enums.Currency;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,22 +16,19 @@ import java.time.LocalDate;
 @Where(clause = "eliminado = false")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class User {
-
+@NoArgsConstructor
+public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userId")
-    private Integer id;
+    public Integer id;
 
-    private String firstName;
+    @Enumerated(EnumType.STRING)
+    public Currency currency;
 
-    private String lastName;
+    public Double transactionLimit;
 
-    private String email;
-
-    private String password;
+    public Double balance;
 
     private LocalDate creationDate;
 
@@ -39,5 +37,8 @@ public class User {
     @Column(name = "eliminado", nullable = false, columnDefinition = "BOOLEAN")
     private Boolean deleted;
 
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    public User userID;
 
 }
